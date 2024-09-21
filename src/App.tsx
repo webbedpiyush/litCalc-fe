@@ -14,7 +14,7 @@ const browserRouter = createBrowserRouter(paths);
 export default function App() {
   return (
     <MantineProvider>
-      <RouterProvider router={browserRouter}></RouterProvider>;
+      <RouterProvider router={browserRouter}></RouterProvider>
     </MantineProvider>
   );
 }
