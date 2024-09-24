@@ -311,14 +311,20 @@ export default function HomePage() {
           <Draggable
             key={index}
             defaultPosition={latexPosition}
-            onStop={(e, data) => setLatexPosition({ x: data.x, y: data.y })}
+            onStop={(e, data) => {
+              console.log(e);
+              setLatexPosition({ x: data.x, y: data.y });
+            }}
           >
             <div className="absolute p-2 text-white rounded shadow-md">
               <div className="latex-content">{latex}</div>
             </div>
           </Draggable>
         ))}
-      <Link to="https://www.github.com/webbedpiyush/litCalc-fe/" target="_blank">
+      <Link
+        to="https://www.github.com/webbedpiyush/litCalc-fe/"
+        target="_blank"
+      >
         <Button className="absolute bottom-4 right-4 z-50 bg-blue-500 text-white font-semibold h-10 px-4 py-4">
           Github
         </Button>
