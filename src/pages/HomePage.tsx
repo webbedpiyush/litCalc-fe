@@ -26,6 +26,8 @@ export default function HomePage() {
   const [latexExpression, setLatexExpression] = useState<Array<string>>([]);
   const [latexPosition, setLatexPosition] = useState({ x: 10, y: 100 });
   const [lotOfVars, setLotOfVars] = useState({});
+  const [eraser, setEraser] = useState(false);
+  const [lineWidth, setLineWidth] = useState(4);
 
   useEffect(() => {
     if (reset) {
@@ -142,8 +144,48 @@ export default function HomePage() {
     if (canvas) {
       const context = canvas.getContext("2d");
       if (context) {
-        context.strokeStyle = color;
+        context.strokeStyle = eraser ? "black" : color;
         context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        context.stroke();
+      }
+    }
+  };
+
+  const startDrawingTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.style.background = "black";
+      const context = canvas.getContext("2d");
+      if (context) {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        context.beginPath();
+        context.moveTo(x, y);
+        setIsDrawing(true);
+      }
+    }
+  };
+
+  const drawTouch = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    if (!isDrawing) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+
+        context.strokeStyle = eraser ? "black" : color;
+        context.lineTo(x, y);
         context.stroke();
       }
     }
@@ -218,6 +260,18 @@ export default function HomePage() {
     }
   };
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.lineWidth = Number(e?.target.value);
+      }
+      setLineWidth(Number(e.target.value));
+    }
+  }
+
   return (
     <>
       <div className="flex flex-wrap justify-between items-center p-2 bg-black ">
@@ -243,13 +297,19 @@ export default function HomePage() {
                 borderStyle: "none",
                 position: "relative",
               }}
-              onClick={() => setColor(Color)}
+              onClick={() => {
+                setColor(Color);
+                setEraser((eraser) => (eraser === true ? false : false));
+              }}
             />
           ))}
         </Group>
         <Button
-          className="h-10 px-4 py-2 z-20 bg-gray-500 text-white m-1"
+          className={`h-10 px-4 py-2 z-20 ${
+            eraser ? "bg-gray-900" : "bg-gray-500"
+          } text-white m-1`}
           variant="default"
+          onClick={() => setEraser((color) => !color)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -284,9 +344,18 @@ export default function HomePage() {
             <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
           </svg>
           <div>
-            <input className="cursor-pointer" type="range" />
+            <input
+              className="cursor-pointer"
+              type="range"
+              value={lineWidth}
+              max={20}
+              min={2}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
           </div>
-          <span>3px</span>
+          <span>{lineWidth}px</span>
         </div>
         <Button
           onClick={sendData}
@@ -305,6 +374,10 @@ export default function HomePage() {
         onMouseOut={stopDrawing}
         onMouseUp={stopDrawing}
         onMouseMove={draw}
+        onTouchStart={startDrawingTouch}
+        onTouchEnd={stopDrawing}
+        onTouchMove={drawTouch}
+        onTouchCancel={stopDrawing}
       />
       {latexExpression &&
         latexExpression.map((latex, index) => (
