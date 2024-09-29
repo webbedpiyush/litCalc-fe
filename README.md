@@ -1,50 +1,86 @@
-# React + TypeScript + Vite
+# LitCalc
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+LitCalc is a lightweight, interactive web-based calculator that supports mathematical, graphical, and pictorial computations drawn on a canvas. Powered by AI, it interprets user inputs and renders the calculated results directly on the canvas.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- **Mathematical Calculations**: Perform basic and advanced mathematical computations.
+- **Graphical Calculations**: Draw and interpret graphs directly on the canvas.
+- **Pictorial Calculations**: Supports shape recognition and pictorial calculations.
+- **AI-based Computations**: Utilizes AI to calculate and render results on the canvas.
+- **User-friendly Interface**: Clean and intuitive canvas-based interface.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Clone the repository:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/webbedpiyush/litCalc-fe.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Navigate to the project directory:
+```bash
+cd litCalc-fe
 ```
+
+Install the dependencies:
+```bash
+npm install
+```
+
+Start the development server:
+```bash
+npm run dev
+```
+
+Open your browser and visit:
+```bash
+http://localhost:3000/
+```
+
+## Usage
+- Launch the application in your browser.
+
+- Use the canvas to draw mathematical, graphical, or pictorial inputs.
+
+- Let the AI compute the results and watch the results rendered on the canvas.
+
+- For mathematical inputs, you can simply draw symbols or type expressions.
+- For graphical inputs, you can draw shapes like graphs or geometrical figures.
+- For pictorial inputs, the AI recognizes shapes and computes relevant results, like areas or perimeters.
+
+ ## Technologies Used
+ # Frontend:
+ - React
+ - Vite
+ - TypeScript
+ - Canvas API
+# Backend :
+ - Backend server [litCalc-be](https://github.com/webbedpiyush/litCalc-be)
+# Styling:
+ - tailwindcss
+
+## Contributing
+  Contributions are welcome! To contribute:
+  - Fork the repo
+  - Create a new feature branch:
+    ```bash
+    git checkout -b feature/new-feature
+     ```
+   - Commit your changes:
+     ```bash
+     git commit -m 'Add new feature'
+      ```
+  - Push to the branch:
+    ```bash
+    git push origin feature/new-feature
+     ```
+    - Open a pull request.
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
